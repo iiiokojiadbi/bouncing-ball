@@ -5,7 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Прыгающий мячик</title>
   </head>
-  <body>
+  <body class="root">
+    <div class="page">
+      <div class="page__content">
+        <section class="game">
+          <div class="ball game__ball"></div>
+          <div class="barrier game__barrier"></div>
+        </section>
+        <section class="controls">
+          <button class="btn btn_type_start controls__start"></button>
+          <button class="btn btn_type_reset controls__reset"></button>
+        </section>
+      </div>
+    </div>
     <script src="./src/main.js"></script>
   </body>
 </html>
