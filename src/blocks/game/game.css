@@ -1,0 +1,10 @@
+@import url(./__ball/game__ball.css);
+@import url(./__barrier/game__barrier.css);
+
+.game {
+  background-color: #ffffff;
+  border-radius: 7px;
+  display: grid;
+  position: relative;
+  overflow: hidden;
+}

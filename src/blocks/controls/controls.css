@@ -1,0 +1,11 @@
+@import url(./__start/controls__start.css);
+@import url(./__reset/controls__reset.css);
+
+.controls {
+  min-height: 120px;
+  display: grid;
+  column-gap: 10px;
+  grid-template-columns: repeat(2, 120px) 4fr;
+  justify-items: center;
+  align-items: center;
+}

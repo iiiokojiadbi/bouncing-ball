@@ -1,0 +1,26 @@
+@keyframes jump {
+  0% {
+    bottom: 0;
+  }
+  60% {
+    bottom: 45%;
+  }
+  70% {
+    bottom: 50%;
+  }
+  80% {
+    bottom: 50%;
+  }
+  100% {
+    bottom: 0;
+  }
+}
+
+@keyframes move {
+  0% {
+    right: -30px;
+  }
+  100% {
+    right: 100%;
+  }
+}

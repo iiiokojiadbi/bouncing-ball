@@ -1,0 +1,9 @@
+.game__ball {
+  /* grid-row: 1 / -1;
+  grid-column: 1 / -1;
+  justify-self: center;
+  align-self: flex-end; */
+  position: absolute;
+  bottom: 0;
+  left: 30%;
+}

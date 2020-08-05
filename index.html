@@ -4,17 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Прыгающий мячик</title>
+    <link rel="stylesheet" href="./src/index.css" />
   </head>
   <body class="root">
     <div class="page">
       <div class="page__content">
         <section class="game">
-          <div class="ball game__ball"></div>
-          <div class="barrier game__barrier"></div>
+          <div class="ball ball_is_jump game__ball"></div>
+          <div class="barrier barrier_is_move game__barrier"></div>
         </section>
         <section class="controls">
-          <button class="btn btn_type_start controls__start"></button>
-          <button class="btn btn_type_reset controls__reset"></button>
+          <button class="btn btn_type_start controls__start">Старт</button>
+          <button class="btn btn_type_reset controls__reset">Сбросить</button>
         </section>
       </div>
     </div>
