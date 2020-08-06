@@ -1,11 +1,18 @@
-import { SPACE, barrierSelector, ballSelector } from './../utils/constants';
+import {
+  SPACE,
+  barrierSelector,
+  ballSelector,
+  gameShowSelector,
+} from './../utils/constants';
 import { checkIntersection } from './../utils/checkIntersection';
 import Ball from './Ball';
 import Barrier from './Barrier';
+import ShowFail from './ShowFail';
 
 export default class Game {
   _ballEl = new Ball(ballSelector, 50, 50);
   _barrierEl = new Barrier(barrierSelector, 30, 100);
+  _showFail = new ShowFail(gameShowSelector);
 
   _checkIntersection = checkIntersection;
 
@@ -42,6 +49,7 @@ export default class Game {
 
   _gameOver({ ballTop, ballLeft, barrierTop, barrierLeft }) {
     this._clearIntevals();
+    this._showFail.showFail();
     this._ballEl.setPosition({
       top: ballTop,
       left: ballLeft,
@@ -62,6 +70,7 @@ export default class Game {
     this._handleRemoveListener();
     this._ballEl.handleResetStatus();
     this._barrierEl.handleStopMove();
+    this._showFail.hideFail();
     this._clearIntevals();
     this._gameOverStatus = false;
   }
