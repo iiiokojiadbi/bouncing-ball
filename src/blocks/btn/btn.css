@@ -1,5 +1,7 @@
 @import url(./_type/btn_type_reset.css);
 @import url(./_type/btn_type_start.css);
+@import url(./_is/btn_is_active.css);
+@import url(./_is/btn_is_disabled.css);
 
 .btn {
   display: block;
@@ -10,19 +12,10 @@
   border-radius: 7px;
   border: none;
   box-shadow: 2px 2px 5px #000;
-  background-color: #ffc107;
   color: #212121;
   font-weight: bold;
   font-size: 15px;
   transition: 0.1s;
-}
-
-.btn:active {
-  box-shadow: 0 0 2px #000;
-}
-
-.btn:hover {
-  background-color: #ff810d;
 }
 
 @media (pointer: fine) {

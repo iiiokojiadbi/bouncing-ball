@@ -1,0 +1,11 @@
+.btn_is_active {
+  background-color: #ffc107;
+}
+
+.btn_is_active:active {
+  box-shadow: 0 0 2px #000;
+}
+
+.btn_is_active:hover {
+  background-color: #ff810d;
+}
