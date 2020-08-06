@@ -7,5 +7,19 @@ const btnReset = document.querySelector(btnResetClass);
 
 const game = new Game();
 
-btnStart.addEventListener('click', () => game.startGame());
-btnReset.addEventListener('click', () => game.resetGame());
+function toogleBtnStatus(btn) {
+  btn.classList.toggle('btn_is_disabled');
+  btn.classList.toggle('btn_is_active');
+}
+
+btnStart.addEventListener('click', () => {
+  toogleBtnStatus(btnStart);
+  btnStart.setAttribute('disabled', 'disabled');
+  game.startGame();
+});
+btnReset.addEventListener('click', () => {
+  toogleBtnStatus(btnStart);
+  btnStart.removeAttribute('disabled');
+
+  game.resetGame();
+});
