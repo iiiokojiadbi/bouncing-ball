@@ -1,10 +1,13 @@
 import { SPACE, ballClass, barrierClass } from './../utils/constants';
+import { checkIntersection } from './../utils/checkIntersection';
 import Ball from './Ball';
 import Barrier from './Barrier';
 
 export default class Game {
-  _ballEl = new Ball(ballClass);
-  _barrierEl = new Barrier(barrierClass);
+  _ballEl = new Ball(ballClass, 50, 50);
+  _barrierEl = new Barrier(barrierClass, 30, 100);
+
+  _checkIntersection = checkIntersection;
 
   _ballPositon = {};
   _barrierPosition = {};
@@ -20,22 +23,24 @@ export default class Game {
   };
 
   _handleCheckIntersection = () => {
-    const { top: ballTop, left: ballLeft } = this._ballPositon;
-    const { top: barrierTop, left: barrierLeft } = this._barrierPosition;
+    const {
+      top: ballTop,
+      left: ballLeft,
+      coordPoints: coordPointsBall,
+    } = this._ballPositon;
+    const {
+      top: barrierTop,
+      left: barrierLeft,
+      coordPoints: coordPointsBarrier,
+    } = this._barrierPosition;
 
-    if (
-      ballTop === barrierTop ||
-      ballLeft === barrierLeft ||
-      ballTop === barrierLeft ||
-      ballLeft === barrierTop
-    ) {
+    if (this._checkIntersection(coordPointsBall, coordPointsBarrier)) {
       this._gameOverStatus = true;
       this._gameOver({ ballTop, ballLeft, barrierTop, barrierLeft });
     }
   };
 
   _gameOver({ ballTop, ballLeft, barrierTop, barrierLeft }) {
-    console.log(this._gameOverStatus);
     this._clearIntevals();
     this._ballEl.setPosition({
       top: ballTop,
@@ -84,7 +89,7 @@ export default class Game {
       this._handleGetBallPosition();
       this._handleGetBarrierPosition();
       this._handleCheckIntersection();
-    }, 10);
+    }, 100);
   }
 
   _clearIntevals() {

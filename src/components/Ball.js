@@ -1,6 +1,8 @@
 export default class Ball {
-  constructor(ballClass) {
+  constructor(ballClass, width, height) {
     this._elem = document.querySelector(ballClass);
+    this._width = width;
+    this._height = height;
     this._isJump = false;
   }
 
@@ -24,7 +26,13 @@ export default class Ball {
 
   getPosition = () => {
     const { offsetTop: top, offsetLeft: left } = this._elem;
-    return { top, left };
+    const coordPoints = {
+      pointLT: { x: left, y: top },
+      pointRT: { x: left + this._width, y: top },
+      pointLB: { x: left, y: top - this._height },
+      pointRB: { x: left + this._width, y: top - this._height },
+    };
+    return { top, left, coordPoints };
   };
 
   handleResetStatus = () => {
