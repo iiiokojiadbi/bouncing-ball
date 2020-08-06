@@ -1,6 +1,6 @@
 export default class Barrier {
-  constructor(barrierClass, width, height) {
-    this._elem = document.querySelector(barrierClass);
+  constructor(barrierSelector, width, height) {
+    this._elem = document.querySelector(barrierSelector);
     this._width = width;
     this._height = height;
     this._isMove = false;

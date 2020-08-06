@@ -1,6 +1,6 @@
 export default class Ball {
-  constructor(ballClass, width, height) {
-    this._elem = document.querySelector(ballClass);
+  constructor(ballSelector, width, height) {
+    this._elem = document.querySelector(ballSelector);
     this._width = width;
     this._height = height;
     this._isJump = false;

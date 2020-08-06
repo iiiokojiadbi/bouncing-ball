@@ -1,11 +1,11 @@
-import { SPACE, ballClass, barrierClass } from './../utils/constants';
+import { SPACE, barrierSelector, ballSelector } from './../utils/constants';
 import { checkIntersection } from './../utils/checkIntersection';
 import Ball from './Ball';
 import Barrier from './Barrier';
 
 export default class Game {
-  _ballEl = new Ball(ballClass, 50, 50);
-  _barrierEl = new Barrier(barrierClass, 30, 100);
+  _ballEl = new Ball(ballSelector, 50, 50);
+  _barrierEl = new Barrier(barrierSelector, 30, 100);
 
   _checkIntersection = checkIntersection;
 

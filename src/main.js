@@ -1,9 +1,9 @@
 import './index.css';
-import { btnStartClass, btnResetClass } from './utils/constants';
+import { btnStartSelector, btnResetSelector } from './utils/constants';
 import Game from './components/Game';
 
-const btnStart = document.querySelector(btnStartClass);
-const btnReset = document.querySelector(btnResetClass);
+const btnStart = document.querySelector(btnStartSelector);
+const btnReset = document.querySelector(btnResetSelector);
 
 const game = new Game();
 
