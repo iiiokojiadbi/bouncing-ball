@@ -1,5 +1,6 @@
 @import url(./__start/controls__start.css);
 @import url(./__reset/controls__reset.css);
+@import url(./__manual/controls__manual.css);
 
 .controls {
   min-height: 120px;
