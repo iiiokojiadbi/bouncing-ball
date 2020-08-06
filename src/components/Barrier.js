@@ -1,6 +1,6 @@
 export default class Barrier {
   constructor(barrierClass) {
-    this._barrierEl = document.querySelector(barrierClass);
+    this._elem = document.querySelector(barrierClass);
     this._isMove = false;
   }
 
@@ -14,11 +14,16 @@ export default class Barrier {
     this._handleRemoveMove();
   };
 
+  getPosition = () => {
+    const { offsetTop: top, offsetLeft: left } = this._elem;
+    return { top, left };
+  };
+
   _handleAddMove() {
-    this._barrierEl.classList.add('barrier_is_move');
+    this._elem.classList.add('barrier_is_move');
   }
 
   _handleRemoveMove() {
-    this._barrierEl.classList.remove('barrier_is_move');
+    this._elem.classList.remove('barrier_is_move');
   }
 }

@@ -1,6 +1,6 @@
 export default class Ball {
   constructor(ballClass) {
-    this._ballEl = document.querySelector(ballClass);
+    this._elem = document.querySelector(ballClass);
     this._isJump = false;
   }
 
@@ -16,16 +16,21 @@ export default class Ball {
     }
   };
 
+  getPosition = () => {
+    const { offsetTop: top, offsetLeft: left } = this._elem;
+    return { top, left };
+  };
+
   handleResetStatus = () => {
     this._isJump = false;
     this._handleRemoveJump();
   };
 
   _handleAddJump() {
-    this._ballEl.classList.add('ball_is_jump');
+    this._elem.classList.add('ball_is_jump');
   }
 
   _handleRemoveJump() {
-    this._ballEl.classList.remove('ball_is_jump');
+    this._elem.classList.remove('ball_is_jump');
   }
 }
