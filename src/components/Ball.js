@@ -1,31 +1,31 @@
-import { ball } from './../utils/constants';
-
 export default class Ball {
-  ballEl = ball;
-  isJump = false;
+  constructor(ballClass) {
+    this._ballEl = document.querySelector(ballClass);
+    this._isJump = false;
+  }
 
   handleJump = () => {
-    if (!this.isJump) {
-      this.isJump = true;
+    if (!this._isJump) {
+      this._isJump = true;
       this._handleAddJump();
-      this.setJumpInterval = setTimeout(() => {
-        this.isJump = false;
+      this._setJumpTimeout = setTimeout(() => {
+        this._isJump = false;
         this._handleRemoveJump();
-        clearInterval(this.setJumpInterval);
+        clearTimeout(this._setJumpTimeout);
       }, 1500);
     }
   };
 
   handleResetStatus = () => {
-    this.isJump = false;
+    this._isJump = false;
     this._handleRemoveJump();
   };
 
   _handleAddJump() {
-    this.ballEl.classList.add('ball_is_jump');
+    this._ballEl.classList.add('ball_is_jump');
   }
 
   _handleRemoveJump() {
-    this.ballEl.classList.remove('ball_is_jump');
+    this._ballEl.classList.remove('ball_is_jump');
   }
 }

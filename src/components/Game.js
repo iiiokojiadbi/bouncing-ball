@@ -1,8 +1,10 @@
-import { SPACE } from './../utils/constants';
+import { SPACE, ballClass, barrierClass } from './../utils/constants';
 import Ball from './Ball';
+import Barrier from './Barrier';
 
 export default class Game {
-  _ballEl = new Ball();
+  _ballEl = new Ball(ballClass);
+  _barrierEl = new Barrier(barrierClass);
 
   _handlePressSpace = (evt) => {
     if (evt.code === SPACE) {
@@ -20,10 +22,12 @@ export default class Game {
 
   startGame() {
     this._handleAddListener();
+    this._barrierEl.handleMove();
   }
 
   resetGame() {
     this._handleRemoveListener();
     this._ballEl.handleResetStatus();
+    this._barrierEl.handleStopMove();
   }
 }
