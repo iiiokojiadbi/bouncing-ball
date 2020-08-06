@@ -1,0 +1,10 @@
+.manual__list-item {
+}
+
+.manual__list-item:before {
+  font-weight: normal;
+  color: #ffc107;
+  content: '•';
+  padding-right: 5px;
+  text-shadow: 1px 1px 2px #000;
+}
