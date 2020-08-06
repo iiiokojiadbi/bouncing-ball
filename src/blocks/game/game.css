@@ -1,5 +1,7 @@
 @import url(./__ball/game__ball.css);
 @import url(./__barrier/game__barrier.css);
+@import url(./__show/game__show.css);
+@import url(./__show/_active/game__show_active.css);
 
 .game {
   background-color: #ffffff;
