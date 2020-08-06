@@ -11,7 +11,6 @@ export const checkIntersection = (element1, element2) => {
     element2.pointLB.y <= element1.pointLB.y &&
     element1.pointLB.y <= element2.pointLT.y;
 
-  console.log(elem1InElem2XR, elem1InElem2YB, elem1InElem2XL, elem1InElem2YB);
   if (
     (elem1InElem2XR && elem1InElem2YB) ||
     (elem1InElem2XL && elem1InElem2YB)
