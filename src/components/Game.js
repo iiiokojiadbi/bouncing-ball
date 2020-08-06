@@ -6,8 +6,60 @@ export default class Game {
   _ballEl = new Ball(ballClass);
   _barrierEl = new Barrier(barrierClass);
 
-  _ballPositon = this._getPositionElem(this._ballEl);
-  _barrierPosition = this._getPositionElem(this._barrierEl);
+  _ballPositon = {};
+  _barrierPosition = {};
+
+  _gameOverStatus = false;
+
+  _handleGetBallPosition = () => {
+    this._ballPositon = this._getPositionElem(this._ballEl);
+  };
+
+  _handleGetBarrierPosition = () => {
+    this._barrierPosition = this._getPositionElem(this._barrierEl);
+  };
+
+  _handleCheckIntersection = () => {
+    const { top: ballTop, left: ballLeft } = this._ballPositon;
+    const { top: barrierTop, left: barrierLeft } = this._barrierPosition;
+
+    if (
+      ballTop === barrierTop ||
+      ballLeft === barrierLeft ||
+      ballTop === barrierLeft ||
+      ballLeft === barrierTop
+    ) {
+      this._gameOverStatus = true;
+      this._gameOver({ ballTop, ballLeft, barrierTop, barrierLeft });
+    }
+  };
+
+  _gameOver({ ballTop, ballLeft, barrierTop, barrierLeft }) {
+    console.log(this._gameOverStatus);
+    this._clearIntevals();
+    this._ballEl.setPosition({
+      top: ballTop,
+      left: ballLeft,
+    });
+    this._barrierEl.setPosition({
+      top: barrierTop,
+      left: barrierLeft,
+    });
+  }
+
+  startGame() {
+    this._handleAddListener();
+    this._barrierEl.handleMove();
+    this._setIntervals();
+  }
+
+  resetGame() {
+    this._handleRemoveListener();
+    this._ballEl.handleResetStatus();
+    this._barrierEl.handleStopMove();
+    this._clearIntevals();
+    this._gameOverStatus = false;
+  }
 
   _handlePressSpace = (evt) => {
     if (evt.code === SPACE) {
@@ -27,25 +79,15 @@ export default class Game {
     return { ...elem.getPosition() };
   }
 
-  startGame() {
-    this._handleAddListener();
-    this._barrierEl.handleMove();
-    this._barrierPosition = this._getPositionElem(this._barrierEl);
-    this._handleTrackBallInterval = setInterval(() => {
-      this._ballPositon = this._getPositionElem(this._ballEl);
-      console.log(this._barrierPosition);
-    }, 100);
-    this._handleTrackBarrierInterval = setInterval(() => {
-      this._barrierPosition = this._getPositionElem(this._barrierEl);
-      console.log(this._ballPositon);
-    }, 100);
+  _setIntervals() {
+    this._handleIntervals = setInterval(() => {
+      this._handleGetBallPosition();
+      this._handleGetBarrierPosition();
+      this._handleCheckIntersection();
+    }, 10);
   }
 
-  resetGame() {
-    this._handleRemoveListener();
-    this._ballEl.handleResetStatus();
-    this._barrierEl.handleStopMove();
-    clearInterval(this._handleTrackBallInterval);
-    clearInterval(this._handleTrackBarrierInterval);
+  _clearIntevals() {
+    clearInterval(this._handleIntervals);
   }
 }

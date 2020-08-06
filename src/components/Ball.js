@@ -16,6 +16,12 @@ export default class Ball {
     }
   };
 
+  setPosition = ({ top, left }) => {
+    this._handleRemoveJump();
+    this._elem.style.top = top + 'px';
+    this._elem.style.left = left + 'px';
+  };
+
   getPosition = () => {
     const { offsetTop: top, offsetLeft: left } = this._elem;
     return { top, left };
@@ -23,8 +29,13 @@ export default class Ball {
 
   handleResetStatus = () => {
     this._isJump = false;
+    this._removeStyle();
     this._handleRemoveJump();
   };
+
+  _removeStyle() {
+    this._elem.removeAttribute('style');
+  }
 
   _handleAddJump() {
     this._elem.classList.add('ball_is_jump');

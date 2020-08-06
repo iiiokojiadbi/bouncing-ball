@@ -11,13 +11,24 @@ export default class Barrier {
 
   handleStopMove = () => {
     this._isMove = false;
+    this._removeStyle();
     this._handleRemoveMove();
+  };
+
+  setPosition = ({ top, left }) => {
+    this._handleRemoveMove();
+    this._elem.style.top = top + 'px';
+    this._elem.style.left = left + 'px';
   };
 
   getPosition = () => {
     const { offsetTop: top, offsetLeft: left } = this._elem;
     return { top, left };
   };
+
+  _removeStyle() {
+    this._elem.removeAttribute('style');
+  }
 
   _handleAddMove() {
     this._elem.classList.add('barrier_is_move');
