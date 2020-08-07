@@ -29,7 +29,7 @@ export default class Game {
           return;
         }
         const itemElem = item.getElem();
-        itemElem.classList.add('barrier_is_move');
+        itemElem.classList.add(barrierSelectors.barrierMove);
         this._gameSection.addItem(itemElem);
       },
       setItem: (item) => {

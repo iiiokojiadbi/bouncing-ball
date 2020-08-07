@@ -1,3 +1,5 @@
+import { barrierSelectors } from './../utils/constants';
+
 export default class Section {
   constructor({ items, rendered, setItem }, containerSelector) {
     this._renderedItems = items;
@@ -12,7 +14,9 @@ export default class Section {
     this._setItem(item);
     this._intervalRender = setInterval(() => {
       const item = this._renderedItems.pop();
-      this._container.querySelector('.barrier_is_move').remove();
+      this._container
+        .querySelector(`.${barrierSelectors.barrierMove}`)
+        .remove();
       this._rendered(item);
       this._setItem(item);
     }, 3000);
@@ -21,9 +25,11 @@ export default class Section {
   resetItems = () => {
     clearInterval(this._intervalRender);
     this._renderedItems = null;
-    this._container.querySelectorAll('.barrier_is_move').forEach((elem) => {
-      elem.remove();
-    });
+    this._container
+      .querySelectorAll(`.${barrierSelectors.barrierMove}`)
+      .forEach((elem) => {
+        elem.remove();
+      });
   };
 
   setItems = (items) => {
