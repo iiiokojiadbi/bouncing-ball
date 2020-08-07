@@ -1,6 +1,8 @@
+import { barrierSelectors, ballSelectors } from '../utils/constants';
+
 export default class Barrier {
-  constructor(barrierSelector, width, height) {
-    this._elem = document.querySelector(barrierSelector);
+  constructor(barrierSelectors, width, height) {
+    this._elem = document.querySelector(barrierSelectors.barrier);
     this._width = width;
     this._height = height;
     this._isMove = false;
@@ -28,8 +30,7 @@ export default class Barrier {
     const coordPoints = {
       pointLT: { x: left, y: top },
       pointRT: { x: left + this._width, y: top },
-      pointLB: { x: left, y: top - this._height },
-      pointRB: { x: left + this._width, y: top - this._height },
+      pointLB: { x: left, y: top + this._height },
     };
     return { top, left, coordPoints };
   };
@@ -39,10 +40,10 @@ export default class Barrier {
   }
 
   _handleAddMove() {
-    this._elem.classList.add('barrier_is_move');
+    this._elem.classList.add(barrierSelectors.barrierMove);
   }
 
   _handleRemoveMove() {
-    this._elem.classList.remove('barrier_is_move');
+    this._elem.classList.remove(barrierSelectors.barrierMove);
   }
 }

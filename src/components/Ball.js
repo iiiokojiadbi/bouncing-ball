@@ -1,6 +1,8 @@
+import { ballSelectors } from '../utils/constants';
+
 export default class Ball {
-  constructor(ballSelector, width, height) {
-    this._elem = document.querySelector(ballSelector);
+  constructor(ballSelectors, width, height) {
+    this._elem = document.querySelector(ballSelectors.ball);
     this._width = width;
     this._height = height;
     this._isJump = false;
@@ -9,47 +11,71 @@ export default class Ball {
   handleJump = () => {
     if (!this._isJump) {
       this._isJump = true;
-      this._handleAddJump();
+      this._handleAddAnimation();
       this._setJumpTimeout = setTimeout(() => {
         this._isJump = false;
-        this._handleRemoveJump();
+        this._handleRemoveAnimation();
         clearTimeout(this._setJumpTimeout);
       }, 1500);
     }
   };
 
   setPosition = ({ top, left }) => {
-    this._handleRemoveJump();
+    this._handleRemoveAnimation();
     this._elem.style.top = top + 'px';
     this._elem.style.left = left + 'px';
   };
 
   getPosition = () => {
     const { offsetTop: top, offsetLeft: left } = this._elem;
-    const coordPoints = {
-      pointLT: { x: left, y: top },
-      pointRT: { x: left + this._width, y: top },
-      pointLB: { x: left, y: top - this._height },
-      pointRB: { x: left + this._width, y: top - this._height },
-    };
+    const coordPoints = this._getPoints();
     return { top, left, coordPoints };
   };
+
+  _getPoints() {
+    const { offsetTop: top, offsetLeft: left } = this._elem;
+    const midWidth = Math.floor(this._width / 2);
+    const midHeight = Math.floor(this._height / 2);
+    const coordPoints = [
+      {
+        x: left + midWidth,
+        y: top,
+      },
+      {
+        x: left + this._width,
+        y: top + midHeight,
+      },
+      {
+        x: left + midWidth,
+        y: top + midHeight,
+      },
+      {
+        x: left + midWidth,
+        y: top + this._height,
+      },
+      {
+        x: left,
+        y: top + midHeight,
+      },
+    ];
+    return coordPoints;
+  }
 
   handleResetStatus = () => {
     this._isJump = false;
     this._removeStyle();
-    this._handleRemoveJump();
+    this._handleRemoveAnimation();
   };
 
   _removeStyle() {
     this._elem.removeAttribute('style');
   }
 
-  _handleAddJump() {
-    this._elem.classList.add('ball_is_jump');
+  _handleAddAnimation() {
+    this._elem.classList.add(ballSelectors.ballJump);
   }
 
-  _handleRemoveJump() {
-    this._elem.classList.remove('ball_is_jump');
+  _handleRemoveAnimation() {
+    this._elem.classList.remove(ballSelectors.ballJump);
   }
 }
