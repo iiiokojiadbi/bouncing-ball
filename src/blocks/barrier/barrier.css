@@ -1,7 +1,5 @@
 @import url(./_is/barrier_is_move.css);
 
 .barrier {
-  height: 100px;
-  width: 30px;
   background-color: #000;
 }
