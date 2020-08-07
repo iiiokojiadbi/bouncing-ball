@@ -7,9 +7,12 @@ export const ballSelectors = {
   ballJump: 'ball_is_jump',
 };
 export const barrierSelectors = {
+  barrierTemplate: '#barrier-template',
   barrier: '.barrier',
   barrierMove: 'barrier_is_move',
 };
+
+export const gameSectionSelector = '.game';
 
 export const gameShowSelectors = '.game__show';
 
