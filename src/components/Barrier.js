@@ -1,5 +1,3 @@
-import { ballSelectors } from '../utils/constants';
-
 export default class Barrier {
   constructor(barrierSelectors, width, height) {
     this._barrierSelectors = barrierSelectors;

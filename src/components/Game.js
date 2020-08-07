@@ -13,24 +13,61 @@ import Section from './Section';
 
 export default class Game {
   _ballEl = new Ball(ballSelectors, 50, 50);
-  _barrierEl = new Barrier(barrierSelectors, 30, 100);
+  _barrierEl = new Barrier(barrierSelectors, 30, 30);
   _showFail = new ShowFail(gameShowSelectors);
+  _checkIntersection = checkIntersection;
+  _ballPositon = {};
+  _barrierPosition = {};
+  _gameOverStatus = false;
   _gameSection = new Section(
     {
-      items: [this._barrierEl.getElem()],
+      items: this._renderBarriers(),
       rendered: (item) => {
-        this._gameSection.addItem(item);
+        if (!item) {
+          this._showFail.showFail();
+          this._gameSection.resetItems();
+          return;
+        }
+        const itemElem = item.getElem();
+        itemElem.classList.add('barrier_is_move');
+        this._gameSection.addItem(itemElem);
+      },
+      setItem: (item) => {
+        this._setItem(item);
       },
     },
     gameSectionSelector
   );
 
-  _checkIntersection = checkIntersection;
+  _renderBarriers() {
+    const countBarriers = 10;
+    let arrBarriers = [];
 
-  _ballPositon = {};
-  _barrierPosition = {};
+    for (let i = 0; i < countBarriers; i++) {
+      arrBarriers = [this._getBarrier(), ...arrBarriers];
+    }
 
-  _gameOverStatus = false;
+    return arrBarriers;
+  }
+
+  _getRandomSize() {
+    return Math.floor(Math.random() * 100 + 30);
+  }
+
+  _getBarrier() {
+    const width = this._getRandomSize();
+    const height = this._getRandomSize();
+
+    return new Barrier(barrierSelectors, width, height);
+  }
+
+  _setItem = (barrier) => {
+    if (!barrier) {
+      return;
+    }
+    this._barrierEl = barrier;
+    this._barrierEl.handleMove();
+  };
 
   _handleGetBallPosition = () => {
     this._ballPositon = this._getPositionElem(this._ballEl);
@@ -57,7 +94,7 @@ export default class Game {
     }
   };
 
-  _gameOver({ ballTop, ballLeft, barrierTop, barrierLeft }) {
+  _gameOver = ({ ballTop, ballLeft, barrierTop, barrierLeft }) => {
     this._clearIntevals();
     this._showFail.showFail();
     this._ballEl.setPosition({
@@ -68,22 +105,25 @@ export default class Game {
       top: barrierTop,
       left: barrierLeft,
     });
-  }
+    this._gameSection.resetItems();
+  };
 
   startGame() {
     this._handleAddListener();
-    this._barrierEl.handleMove();
-    this._gameSection.renderItems();
     this._setIntervals();
+    this._gameSection.renderItems();
   }
 
   resetGame() {
     this._handleRemoveListener();
+    this._gameSection.resetItems();
     this._ballEl.handleResetStatus();
     this._barrierEl.handleStopMove();
     this._showFail.hideFail();
     this._clearIntevals();
     this._gameOverStatus = false;
+    this._barrierEl = new Barrier(barrierSelectors, 30, 30);
+    this._gameSection.setItems(this._renderBarriers());
   }
 
   _handlePressSpace = (evt) => {
