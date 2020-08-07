@@ -39,6 +39,24 @@ export default class Game {
     gameSectionSelector
   );
 
+  startGame() {
+    this._handleAddListener();
+    this._setIntervals();
+    this._gameSection.renderItems();
+  }
+
+  resetGame() {
+    this._handleRemoveListener();
+    this._gameSection.resetItems();
+    this._ballEl.handleResetStatus();
+    this._barrierEl.handleStopMove();
+    this._showFail.hideFail();
+    this._clearIntevals();
+    this._gameOverStatus = false;
+    this._barrierEl = new Barrier(barrierSelectors, 30, 30);
+    this._gameSection.setItems(this._renderBarriers());
+  }
+
   _renderBarriers() {
     const countBarriers = 10;
     let arrBarriers = [];
@@ -107,24 +125,6 @@ export default class Game {
     });
     this._gameSection.resetItems();
   };
-
-  startGame() {
-    this._handleAddListener();
-    this._setIntervals();
-    this._gameSection.renderItems();
-  }
-
-  resetGame() {
-    this._handleRemoveListener();
-    this._gameSection.resetItems();
-    this._ballEl.handleResetStatus();
-    this._barrierEl.handleStopMove();
-    this._showFail.hideFail();
-    this._clearIntevals();
-    this._gameOverStatus = false;
-    this._barrierEl = new Barrier(barrierSelectors, 30, 30);
-    this._gameSection.setItems(this._renderBarriers());
-  }
 
   _handlePressSpace = (evt) => {
     if (evt.code === SPACE) {
