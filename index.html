@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Тестовое задание от компании 24Н Софт" />
+    <meta name="author" content="Алексей Селезнев" />
+    <title>Прыгающий мячик</title>
+  <link href="main.css" rel="stylesheet"></head>
+  <body class="root">
+    <div class="page">
+      <div class="page__content">
+        <section class="game">
+          <div class="game__show">Конец игры</div>
+          <div class="ball game__ball"></div>
+        </section>
+        <section class="controls">
+          <button class="btn btn_type_start btn_is_active controls__start">
+            Старт
+          </button>
+          <button class="btn btn_type_reset btn_is_disabled controls__reset">
+            Сбросить
+          </button>
+          <div class="manual">
+            <ul class="manual__list">
+              <li class="manual__list-item">
+                <span class="manual__text"
+                  >Не дайте шару коснуться барьера</span
+                >
+              </li>
+              <li class="manual__list-item">
+                <span class="manual__text"
+                  >Нажимайте "Пробел", чтобы шар сделал прыжок
+                </span>
+              </li>
+              <li class="manual__list-item">
+                <span class="manual__text"
+                  >Для запуска игры нажмите "Старт"</span
+                >
+              </li>
+              <li class="manual__list-item">
+                <span class="manual__text"
+                  >Для сброса игры нажмите "Сбросить"</span
+                >
+              </li>
+            </ul>
+          </div>
+        </section>
+      </div>
+      <template id="barrier-template">
+        <div class="barrier game__barrier"></div>
+      </template>
+    </div>
+  <script src="main.js"></script></body>
+</html>
