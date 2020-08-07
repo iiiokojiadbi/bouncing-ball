@@ -1,7 +1,6 @@
-import { ballSelectors } from '../utils/constants';
-
 export default class Ball {
   constructor(ballSelectors, width, height) {
+    this._ballSelectors = ballSelectors;
     this._elem = document.querySelector(ballSelectors.ball);
     this._width = width;
     this._height = height;
@@ -72,10 +71,10 @@ export default class Ball {
   }
 
   _handleAddAnimation() {
-    this._elem.classList.add(ballSelectors.ballJump);
+    this._elem.classList.add(this._ballSelectors.ballJump);
   }
 
   _handleRemoveAnimation() {
-    this._elem.classList.remove(ballSelectors.ballJump);
+    this._elem.classList.remove(this._ballSelectors.ballJump);
   }
 }

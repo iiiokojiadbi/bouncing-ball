@@ -3,16 +3,27 @@ import {
   barrierSelectors,
   ballSelectors,
   gameShowSelectors,
+  gameSectionSelector,
 } from './../utils/constants';
 import { checkIntersection } from './../utils/checkIntersection';
 import Ball from './Ball';
 import Barrier from './Barrier';
 import ShowFail from './ShowFail';
+import Section from './Section';
 
 export default class Game {
   _ballEl = new Ball(ballSelectors, 50, 50);
   _barrierEl = new Barrier(barrierSelectors, 30, 100);
   _showFail = new ShowFail(gameShowSelectors);
+  _gameSection = new Section(
+    {
+      items: [this._barrierEl.getElem()],
+      rendered: (item) => {
+        this._gameSection.addItem(item);
+      },
+    },
+    gameSectionSelector
+  );
 
   _checkIntersection = checkIntersection;
 
@@ -62,6 +73,7 @@ export default class Game {
   startGame() {
     this._handleAddListener();
     this._barrierEl.handleMove();
+    this._gameSection.renderItems();
     this._setIntervals();
   }
 

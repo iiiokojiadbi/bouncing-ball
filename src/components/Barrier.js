@@ -1,8 +1,9 @@
-import { barrierSelectors, ballSelectors } from '../utils/constants';
+import { ballSelectors } from '../utils/constants';
 
 export default class Barrier {
   constructor(barrierSelectors, width, height) {
-    this._elem = document.querySelector(barrierSelectors.barrier);
+    this._barrierSelectors = barrierSelectors;
+    this._elem = this._getTemplate();
     this._width = width;
     this._height = height;
     this._isMove = false;
@@ -10,6 +11,7 @@ export default class Barrier {
 
   handleMove = () => {
     this._isMove = true;
+    this._setSizeBarrier();
     this._handleAddMove();
   };
 
@@ -35,15 +37,33 @@ export default class Barrier {
     return { top, left, coordPoints };
   };
 
+  getElem = () => {
+    return this._elem;
+  };
+
+  _setSizeBarrier() {
+    this._elem.style.width = this._width + 'px';
+    this._elem.style.height = this._height + 'px';
+  }
+
   _removeStyle() {
     this._elem.removeAttribute('style');
   }
 
   _handleAddMove() {
-    this._elem.classList.add(barrierSelectors.barrierMove);
+    this._elem.classList.add(this._barrierSelectors.barrierMove);
   }
 
   _handleRemoveMove() {
-    this._elem.classList.remove(barrierSelectors.barrierMove);
+    this._elem.classList.remove(this._barrierSelectors.barrierMove);
+  }
+
+  _getTemplate() {
+    const barrierElement = document
+      .querySelector(this._barrierSelectors.barrierTemplate)
+      .content.querySelector(this._barrierSelectors.barrier)
+      .cloneNode(true);
+
+    return barrierElement;
   }
 }
