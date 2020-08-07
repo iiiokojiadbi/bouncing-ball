@@ -1,3 +1,4 @@
 .barrier_is_move {
   animation: move 3s infinite linear;
+  animation-iteration-count: 1;
 }
