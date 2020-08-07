@@ -51,7 +51,7 @@ export default class Game {
   }
 
   _getRandomSize() {
-    return Math.floor(Math.random() * 100 + 30);
+    return Math.floor(Math.random() * 90 + 40);
   }
 
   _getBarrier() {

@@ -37,6 +37,14 @@ export default class Ball {
     const midHeight = Math.floor(this._height / 2);
     const coordPoints = [
       {
+        x: left + midWidth + Math.floor(midWidth * Math.cos(-45)),
+        y: top + midHeight + Math.floor(midHeight * Math.sin(-45)),
+      },
+      {
+        x: left + midWidth + Math.floor(midWidth * Math.cos(-135)),
+        y: top + midHeight + Math.floor(midHeight * Math.sin(-135)),
+      },
+      {
         x: left + midWidth,
         y: top,
       },
