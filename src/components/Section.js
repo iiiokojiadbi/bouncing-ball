@@ -1,5 +1,7 @@
 import { barrierSelectors } from './../utils/constants';
 
+// компонент отвечающий за рендер и добавление в разметку барьеров
+
 export default class Section {
   constructor({ items, rendered, setItem }, containerSelector) {
     this._renderedItems = items;
@@ -8,6 +10,7 @@ export default class Section {
     this._container = document.querySelector(containerSelector);
   }
 
+  //метод для отрисовки компонента
   renderItems = () => {
     const item = this._renderedItems.pop();
     this._rendered(item);
@@ -22,6 +25,7 @@ export default class Section {
     }, 3000);
   };
 
+  //метод для отчистки элементов и удаления интервала
   resetItems = () => {
     clearInterval(this._intervalRender);
     this._renderedItems = null;
@@ -32,10 +36,12 @@ export default class Section {
       });
   };
 
+  //метод для установки необходимых элементов
   setItems = (items) => {
     this._renderedItems = items;
   };
 
+  //метод для добавления элемента в разметку
   addItem = (element) => {
     this._container.prepend(element);
   };

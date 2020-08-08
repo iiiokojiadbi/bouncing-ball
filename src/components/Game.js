@@ -11,6 +11,8 @@ import Barrier from './Barrier';
 import ShowFail from './ShowFail';
 import Section from './Section';
 
+// основной компонент отвечающий за всю логику мини-игры
+
 export default class Game {
   _ballEl = new Ball(ballSelectors, 50, 50);
   _barrierEl = new Barrier(barrierSelectors, 30, 30);
@@ -39,12 +41,14 @@ export default class Game {
     gameSectionSelector
   );
 
+  //метод для старта игры
   startGame() {
     this._handleAddListener();
     this._setIntervals();
     this._gameSection.renderItems();
   }
 
+  //метод для сброса игры
   resetGame() {
     this._handleRemoveListener();
     this._gameSection.resetItems();
@@ -53,10 +57,11 @@ export default class Game {
     this._showFail.hideFail();
     this._clearIntevals();
     this._gameOverStatus = false;
-    this._barrierEl = new Barrier(barrierSelectors, 30, 30);
+    this._barrierEl = new Barrier(barrierSelectors);
     this._gameSection.setItems(this._renderBarriers());
   }
 
+  //внутренний метод для создания барьеров
   _renderBarriers() {
     const countBarriers = 10;
     let arrBarriers = [];
@@ -68,17 +73,13 @@ export default class Game {
     return arrBarriers;
   }
 
-  _getRandomSize() {
-    return Math.floor(Math.random() * 90 + 40);
-  }
-
+  //внутренний метод для получения нового барьера
   _getBarrier() {
-    const width = this._getRandomSize();
-    const height = this._getRandomSize();
-
-    return new Barrier(barrierSelectors, width, height);
+    return new Barrier(barrierSelectors);
   }
 
+  //внутренний метод для установки барьера в текущий this._barrierEl
+  //и вызова метода установки состояния движения
   _setItem = (barrier) => {
     if (!barrier) {
       return;
@@ -87,14 +88,17 @@ export default class Game {
     this._barrierEl.handleMove();
   };
 
+  //внутренний метод для получения позиции мяча
   _handleGetBallPosition = () => {
     this._ballPositon = this._getPositionElem(this._ballEl);
   };
 
+  //внутренний метод для получения позиции барьера
   _handleGetBarrierPosition = () => {
     this._barrierPosition = this._getPositionElem(this._barrierEl);
   };
 
+  //метод проверяющий вхождение мяча в барьер
   _handleCheckIntersection = () => {
     const {
       top: ballTop,
@@ -112,6 +116,7 @@ export default class Game {
     }
   };
 
+  //внутренний метод вызова конца игры
   _gameOver = ({ ballTop, ballLeft, barrierTop, barrierLeft }) => {
     this._clearIntevals();
     this._showFail.showFail();
@@ -126,24 +131,29 @@ export default class Game {
     this._gameSection.resetItems();
   };
 
+  //внутренний метод проверки нажатия на пробел
   _handlePressSpace = (evt) => {
     if (evt.code === SPACE) {
       this._ballEl.handleJump();
     }
   };
 
+  //внутренний метод для добавления слушателя на документ
   _handleAddListener() {
     document.addEventListener('keydown', this._handlePressSpace);
   }
 
+  //внутренний метод для удаления слушателя с документа
   _handleRemoveListener() {
     document.removeEventListener('keydown', this._handlePressSpace);
   }
 
+  //внутренний метод для получения позиции
   _getPositionElem(elem) {
     return { ...elem.getPosition() };
   }
 
+  //внутренний метод для установки интервала
   _setIntervals() {
     this._handleIntervals = setInterval(() => {
       this._handleGetBallPosition();
@@ -152,6 +162,7 @@ export default class Game {
     }, 100);
   }
 
+  //внутренний метод для отчистки интервала
   _clearIntevals() {
     clearInterval(this._handleIntervals);
   }

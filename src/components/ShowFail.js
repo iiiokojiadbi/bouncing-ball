@@ -1,3 +1,5 @@
+// компонент отвечающий за показ ошибки
+
 export default class ShowFail {
   constructor(showSelector) {
     this._showEl = document.querySelector(showSelector);

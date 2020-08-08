@@ -1,3 +1,5 @@
+//компонент отвечающий за функционирование мяча
+
 export default class Ball {
   constructor(ballSelectors, width, height) {
     this._ballSelectors = ballSelectors;
@@ -7,6 +9,7 @@ export default class Ball {
     this._isJump = false;
   }
 
+  //метод для вызова состояния прыжка мяча
   handleJump = () => {
     if (!this._isJump) {
       this._isJump = true;
@@ -19,18 +22,28 @@ export default class Ball {
     }
   };
 
+  //метод для фиксации позиции мяча при столкновении
   setPosition = ({ top, left }) => {
     this._handleRemoveAnimation();
     this._elem.style.top = top + 'px';
     this._elem.style.left = left + 'px';
   };
 
+  //метод для получения текущей позиции мяча
   getPosition = () => {
     const { offsetTop: top, offsetLeft: left } = this._elem;
     const coordPoints = this._getPoints(12);
     return { top, left, coordPoints };
   };
 
+  //метод ресета состояния мяча
+  handleResetStatus = () => {
+    this._isJump = false;
+    this._removeStyle();
+    this._handleRemoveAnimation();
+  };
+
+  //внутренний метод получения точек на окружности мяча
   _getPoints(numberPoints) {
     const { offsetTop: top, offsetLeft: left } = this._elem;
     const midWidth = Math.floor(this._width / 2);
@@ -50,20 +63,17 @@ export default class Ball {
     return points;
   }
 
-  handleResetStatus = () => {
-    this._isJump = false;
-    this._removeStyle();
-    this._handleRemoveAnimation();
-  };
-
+  //внутренний метод удаления инлайн стиля
   _removeStyle() {
     this._elem.removeAttribute('style');
   }
 
+  //внутренний метод для добавления класса с анимацией
   _handleAddAnimation() {
     this._elem.classList.add(this._ballSelectors.ballJump);
   }
 
+  //внутренний метод для удаления класса с анимацией
   _handleRemoveAnimation() {
     this._elem.classList.remove(this._ballSelectors.ballJump);
   }
