@@ -27,45 +27,27 @@ export default class Ball {
 
   getPosition = () => {
     const { offsetTop: top, offsetLeft: left } = this._elem;
-    const coordPoints = this._getPoints();
+    const coordPoints = this._getPoints(12);
     return { top, left, coordPoints };
   };
 
-  _getPoints() {
+  _getPoints(numberPoints) {
     const { offsetTop: top, offsetLeft: left } = this._elem;
     const midWidth = Math.floor(this._width / 2);
     const midHeight = Math.floor(this._height / 2);
-    const coordPoints = [
-      {
-        x: left + midWidth + Math.floor(midWidth * Math.cos(-45)),
-        y: top + midHeight + Math.floor(midHeight * Math.sin(-45)),
-      },
-      {
-        x: left + midWidth + Math.floor(midWidth * Math.cos(-135)),
-        y: top + midHeight + Math.floor(midHeight * Math.sin(-135)),
-      },
-      {
-        x: left + midWidth,
-        y: top,
-      },
-      {
-        x: left + this._width,
-        y: top + midHeight,
-      },
-      {
-        x: left + midWidth,
-        y: top + midHeight,
-      },
-      {
-        x: left + midWidth,
-        y: top + this._height,
-      },
-      {
-        x: left,
-        y: top + midHeight,
-      },
-    ];
-    return coordPoints;
+    let degree = 360;
+    const sectionDegree = degree / numberPoints;
+    let points = [];
+
+    for (let i = 0; i < numberPoints; i++) {
+      const point = {
+        x: left + midWidth + Math.floor(midWidth * Math.cos(degree)),
+        y: top + midHeight + Math.floor(midHeight * Math.sin(degree)),
+      };
+      degree = degree - sectionDegree;
+      points = [point, ...points];
+    }
+    return points;
   }
 
   handleResetStatus = () => {
