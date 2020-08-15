@@ -25,9 +25,12 @@ export default class Section {
     }, 3000);
   };
 
+  stopRender = () => {
+    clearInterval(this._intervalRender);
+  };
+
   //метод для отчистки элементов и удаления интервала
   resetItems = () => {
-    clearInterval(this._intervalRender);
     this._renderedItems = null;
     this._container
       .querySelectorAll(`.${barrierSelectors.barrierMove}`)

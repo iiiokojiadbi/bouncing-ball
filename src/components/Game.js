@@ -15,7 +15,7 @@ import Section from './Section';
 
 export default class Game {
   _ballEl = new Ball(ballSelectors, 50, 50);
-  _barrierEl = new Barrier(barrierSelectors, 30, 30);
+  _barrierEl = new Barrier(barrierSelectors);
   _showFail = new ShowFail(gameShowSelectors);
   _checkIntersection = checkIntersection;
   _ballPositon = {};
@@ -50,10 +50,11 @@ export default class Game {
 
   //метод для сброса игры
   resetGame() {
-    this._handleRemoveListener();
     this._gameSection.resetItems();
+    this._gameSection.stopRender();
+    this._handleRemoveListener();
     this._ballEl.handleResetStatus();
-    this._barrierEl.handleStopMove();
+    this._barrierEl.handleResetStatus();
     this._showFail.hideFail();
     this._clearIntevals();
     this._gameOverStatus = false;
@@ -119,6 +120,7 @@ export default class Game {
   //внутренний метод вызова конца игры
   _gameOver = ({ ballTop, ballLeft, barrierTop, barrierLeft }) => {
     this._clearIntevals();
+    this._gameSection.stopRender();
     this._showFail.showFail();
     this._ballEl.setPosition({
       top: ballTop,
@@ -128,7 +130,6 @@ export default class Game {
       top: barrierTop,
       left: barrierLeft,
     });
-    this._gameSection.resetItems();
   };
 
   //внутренний метод проверки нажатия на пробел
