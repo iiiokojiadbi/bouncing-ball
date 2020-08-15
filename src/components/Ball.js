@@ -1,32 +1,25 @@
+import Item from './Item';
+
 //компонент отвечающий за функционирование мяча
 
-export default class Ball {
-  constructor(ballSelectors, width, height) {
-    this._ballSelectors = ballSelectors;
-    this._elem = document.querySelector(ballSelectors.ball);
+export default class Ball extends Item {
+  constructor(selectors, width, height) {
+    super(selectors);
     this._width = width;
     this._height = height;
-    this._isJump = false;
   }
 
   //метод для вызова состояния прыжка мяча
   handleJump = () => {
-    if (!this._isJump) {
-      this._isJump = true;
+    if (!this._isAnim) {
+      this._isAnim = true;
       this._handleAddAnimation();
       this._setJumpTimeout = setTimeout(() => {
-        this._isJump = false;
+        this._isAnim = false;
         this._handleRemoveAnimation();
         clearTimeout(this._setJumpTimeout);
       }, 1500);
     }
-  };
-
-  //метод для фиксации позиции мяча при столкновении
-  setPosition = ({ top, left }) => {
-    this._handleRemoveAnimation();
-    this._elem.style.top = top + 'px';
-    this._elem.style.left = left + 'px';
   };
 
   //метод для получения текущей позиции мяча
@@ -34,13 +27,6 @@ export default class Ball {
     const { offsetTop: top, offsetLeft: left } = this._elem;
     const coordPoints = this._getPoints(12);
     return { top, left, coordPoints };
-  };
-
-  //метод ресета состояния мяча
-  handleResetStatus = () => {
-    this._isJump = false;
-    this._removeStyle();
-    this._handleRemoveAnimation();
   };
 
   //внутренний метод получения точек на окружности мяча
@@ -61,20 +47,5 @@ export default class Ball {
       points = [point, ...points];
     }
     return points;
-  }
-
-  //внутренний метод удаления инлайн стиля
-  _removeStyle() {
-    this._elem.removeAttribute('style');
-  }
-
-  //внутренний метод для добавления класса с анимацией
-  _handleAddAnimation() {
-    this._elem.classList.add(this._ballSelectors.ballJump);
-  }
-
-  //внутренний метод для удаления класса с анимацией
-  _handleRemoveAnimation() {
-    this._elem.classList.remove(this._ballSelectors.ballJump);
   }
 }
