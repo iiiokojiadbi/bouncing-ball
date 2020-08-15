@@ -18,8 +18,6 @@ export default class Game {
   _barrierEl = new Barrier(barrierSelectors);
   _showFail = new ShowFail(gameShowSelectors);
   _checkIntersection = checkIntersection;
-  _ballPositon = {};
-  _barrierPosition = {};
   _gameOverStatus = false;
   _gameSection = new Section(
     {
@@ -43,9 +41,11 @@ export default class Game {
 
   //метод для старта игры
   startGame() {
-    this._handleAddListener();
-    this._setIntervals();
-    this._gameSection.renderItems();
+    if (!this._gameOverStatus) {
+      this._handleAddListener();
+      this._setIntervals();
+      this._gameSection.renderItems();
+    }
   }
 
   //метод для сброса игры
@@ -89,28 +89,18 @@ export default class Game {
     this._barrierEl.handleMove();
   };
 
-  //внутренний метод для получения позиции мяча
-  _handleGetBallPosition = () => {
-    this._ballPositon = this._getPositionElem(this._ballEl);
-  };
-
-  //внутренний метод для получения позиции барьера
-  _handleGetBarrierPosition = () => {
-    this._barrierPosition = this._getPositionElem(this._barrierEl);
-  };
-
   //метод проверяющий вхождение мяча в барьер
   _handleCheckIntersection = () => {
     const {
       top: ballTop,
       left: ballLeft,
       coordPoints: coordPointsBall,
-    } = this._ballPositon;
+    } = this._ballEl.getPosition();
     const {
       top: barrierTop,
       left: barrierLeft,
       coordPoints: coordPointsBarrier,
-    } = this._barrierPosition;
+    } = this._barrierEl.getPosition();
     if (this._checkIntersection(coordPointsBall, coordPointsBarrier)) {
       this._gameOverStatus = true;
       this._gameOver({ ballTop, ballLeft, barrierTop, barrierLeft });
@@ -149,16 +139,9 @@ export default class Game {
     document.removeEventListener('keydown', this._handlePressSpace);
   }
 
-  //внутренний метод для получения позиции
-  _getPositionElem(elem) {
-    return { ...elem.getPosition() };
-  }
-
   //внутренний метод для установки интервала
   _setIntervals() {
     this._handleIntervals = setInterval(() => {
-      this._handleGetBallPosition();
-      this._handleGetBarrierPosition();
       this._handleCheckIntersection();
     }, 100);
   }
